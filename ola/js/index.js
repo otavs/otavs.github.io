@@ -1,15 +1,12 @@
-let gui, guiAttrs, entityList = {}, newID = 0
+let gui, entityList = {}, newID = 0
 var mouseSize = 2, mouseColor = '#FFFFFF', 
     velocity = 1, fps = 0, blockX = false, blockY = false, qtd = 0,
     bgColor = '#000000', clearBg = true
 
 function setup() {
-    createCanvas(windowWidth, windowHeight)
-    gui = new dat.GUI({
-        name: 'ola'
-    })
+    createCanvas(windowWidth, windowHeight) 
+    createGUI()
     populateGUI()
-    gui.close()
     addCircles()
 }
 
@@ -31,28 +28,6 @@ function update() {
     }
     // entityList = entityList.filter(entity => !entity.toRemove)
     fps = frameRate()
-}
-
-function populateGUI() {
-    let controlFolder = gui.addFolder('Control')
-    controlFolder.add(window, 'velocity', 0, 10).listen()
-    controlFolder.add(window, 'blockX').listen()
-    controlFolder.add(window, 'blockY').listen()
-    controlFolder.add(window, 'addCircle')
-    controlFolder.add(window, 'removeCircle')
-
-    let mouseFolder = gui.addFolder('Mouse')
-    mouseFolder.add(window, 'mouseSize', 0, windowWidth).listen()
-    mouseFolder.addColor(window, 'mouseColor')
-
-    let bgFolder = gui.addFolder('Background')
-    bgFolder.add(window, 'clearBg').listen()
-    bgFolder.addColor(window, 'bgColor')
-
-    let infoFolder = gui.addFolder('Info')
-    infoFolder.add(window, 'mouseX').listen()
-    infoFolder.add(window, 'mouseY').listen()
-    infoFolder.add(window, 'fps').listen()
 }
 
 function mouseWheel(event) {
@@ -88,4 +63,8 @@ function removeCircle() {
 
 function randomColor() {
     return color(random(256), random(256), random(256))
+}
+
+function windowResized(){
+    resizeCanvas(windowWidth, windowHeight)
 }
