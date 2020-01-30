@@ -11,8 +11,10 @@ class Circle {
     }
 
     update() {
-        this.x += this.vx * velocity
-        this.y += this.vy * velocity
+        if(!blockX)
+            this.x += this.vx * velocity
+        if(!blockY)
+            this.y += this.vy * velocity
         if(this.x < this.radius) {
             this.x = this.radius
             this.vx *= -1
