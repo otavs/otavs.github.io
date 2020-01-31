@@ -1,70 +1,61 @@
 let gui, entityList = {}, newID = 0
-var mouseSize = 2, mouseColor = '#FFFFFF', 
-    velocity = 1, fps = 0, blockX = false, blockY = false, qtd = 0,
-    bgColor = '#000000', clearBg = true
+var mouseRadius = 1, mouseColor = '#FFFFFF', showMouse = false,
+	speed = 1, fps = 0, blockX = false, blockY = false, qtd = 0, 
+	autoSpawn = true, maxQuantity = 200, spawnRangeMinX = 0, spawnRangeMaxX = 10, spawnRangeMinY = 0, spawnRangeMaxY = 10,
+	bgColor = '#000000', clearBg = true,
+	leftBorder = true, rightBorder = true, topBorder = true, bottomBorder = true 
 
 function setup() {
-    createCanvas(windowWidth, windowHeight) 
-    createGUI()
-    populateGUI()
-    addCircles()
+	createCanvas(windowWidth, windowHeight)  
+	createGUI()
+	populateGUI()
 }
 
 function draw() {
-    update()
-    if(clearBg)
-        background(bgColor)
-    fill(mouseColor)
-    stroke(mouseColor)
-    circle(mouseX, mouseY, mouseSize*2)
-    for(let i in entityList) {
-        entityList[i].draw()
-    }
+	update()
+	if(clearBg)
+		background(bgColor)
+	if(showMouse)
+		drawMouse()
+	for(let i in entityList) {
+		entityList[i].draw()
+	}
 }
 
 function update() {
-    for(let i in entityList) {
-        entityList[i].update()
-    }
-    // entityList = entityList.filter(entity => !entity.toRemove)
-    fps = frameRate()
+	if(autoSpawn && qtd < maxQuantity) {
+		addCircle()
+	}
+	for(let i in entityList) {
+		entityList[i].update()
+	}
+	fps = frameRate()
+}
+
+function drawMouse() {
+	fill(mouseColor)
+	stroke(mouseColor)
+	circle(mouseX, mouseY, mouseRadius*2)
 }
 
 function mouseWheel(event) {
-    mouseSize += event.delta * -.1
-    if(mouseSize < 0) mouseSize = 0
-    if(mouseSize > windowWidth) mouseSize = windowWidth
+	mouseRadius += event.delta * -.1
+	if(mouseRadius < 0) mouseRadius = 0
+	if(mouseRadius > windowWidth) mouseRadius = windowWidth
 }
 
 function mouseClicked() {
-    // addCircle()
-}
-
-function addCircles() {
-    for(let i = 0; i < 250; i++) {
-        addCircle()
-    }
-    qtd += 250
-}
-
-function addCircle() {
-    let newCircle = new Circle(random(windowWidth), random(windowHeight), random(5, 15), randomColor())
-    entityList[newCircle.id] = newCircle
-    qtd++
-}
-
-function removeCircle() {
-    for(let i in entityList) {
-        delete entityList[i]
-        qtd--
-        break
-    }
+	// :D
 }
 
 function randomColor() {
-    return color(random(256), random(256), random(256))
+	return color(random(256), random(256), random(256))
 }
 
 function windowResized(){
-    resizeCanvas(windowWidth, windowHeight)
+	resizeCanvas(windowWidth, windowHeight)
+	gui.spawnRangeMinX.__max = windowWidth
+	gui.spawnRangeMaxX.__max = windowWidth
+	gui.spawnRangeMinY.__max = windowHeight
+	gui.spawnRangeMaxY.__max = windowHeight
 }
