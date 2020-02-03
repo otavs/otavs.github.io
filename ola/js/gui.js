@@ -5,13 +5,6 @@ function createGUI() {
 	gui.close()
 }
 
-const obj = {
-	test: 4
-}
-
-const gui = new dat.GUI()
-gui.add(obj, 'test')
-
 function populateGUI() {
 	const controlFolder = gui.addFolder('Movement')
 	controlFolder.add(window, 'speed', 0, 10).listen()
