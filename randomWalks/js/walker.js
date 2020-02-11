@@ -1,18 +1,20 @@
 class Walker {
-  constructor(x, y, s) {
+  constructor(x, y, s, color) {
     this.x = x
     this.y = y
     this.s = s
+    this.color = color
   }
 
   draw() {
-    stroke(0)
-    fill(0)
+    stroke(this.color)
+    fill(this.color)
     strokeWeight(5)
     point(this.x, this.y)
+    // circle(this.x, this.y, 5)
   }
 
-  update() {
+  step() {
     let choice = Math.floor(random(4))
     if(choice == 0) {
       this.x += this.s
