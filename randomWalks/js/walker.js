@@ -9,13 +9,22 @@ class Walker {
   draw() {
     stroke(this.color)
     fill(this.color)
-    strokeWeight(5)
+    strokeWeight(1)
+    circle(this.x, this.y, this.s/2+1)
+  }
+
+  drawPoint() {
+    strokeWeight(this.s)
     point(this.x, this.y)
-    // circle(this.x, this.y, 5)
   }
 
   step() {
     let choice = Math.floor(random(4))
+    let r = random()
+    if(r < .25) choice = 0
+    else {
+      choice = Math.floor(random()*3) + 1
+    }
     if(choice == 0) {
       this.x += this.s
     }
@@ -28,5 +37,16 @@ class Walker {
     if(choice == 3) {
       this.y -= this.s
     }
+  }
+
+  step2() {
+    let c = 7
+    let stepX = random(-c, c), stepY = random(-c, c)
+    this.x += stepX
+    this.y += stepY
+  }
+
+  step3() {
+    
   }
 }
