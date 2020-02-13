@@ -47,6 +47,9 @@ class Walker {
   }
 
   step3() {
-    
+    let r = random(70, 300)
+    let theta = random(0, 2*PI)
+    this.x = centerX + r * cos(theta)
+    this.y = centerY + r * sin(theta)
   }
 }

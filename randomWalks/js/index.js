@@ -16,7 +16,7 @@ function draw() {
 	//background(0, 0, 0)
 	for(let walker of walkers) {
 		for(let i = 0; i < nSteps; i++) {
-			walker.step2()
+			walker.step3()
 			walker.draw()
 		}
 	}
