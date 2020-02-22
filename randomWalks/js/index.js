@@ -1,5 +1,5 @@
 let gui, centerX, centerY, walkers = []
-var n = 400, nSteps = 1
+var n = 300, nSteps = 1, walkerSize = 1, stepType = 3
 
 function setup() {
 	createCanvas(windowWidth, windowHeight)  
@@ -13,10 +13,10 @@ function setup() {
 
 function draw() {
 	update()
-	//background(0, 0, 0)
+	// background(0, 0, 0)
 	for(let walker of walkers) {
 		for(let i = 0; i < nSteps; i++) {
-			walker.step3()
+			walker.step(stepType)
 			walker.draw()
 		}
 	}
@@ -41,5 +41,13 @@ function randomColor() {
 function startWalkers() {
 	walkers = []
 	for(let i = 0; i < n; i++)
-		walkers.push(new Walker(centerX, centerY, 1, randomColor()))
+		walkers.push(new Walker(centerX, centerY, walkerSize, randomColor()))
+}
+
+function keyPressed() {
+  if('0' <= key && key <= 3) {
+		stepType = +key
+		background(0, 0, 0)
+		startWalkers()
+	}
 }

@@ -4,6 +4,10 @@ class Walker {
     this.y = y
     this.s = s
     this.color = color
+    let a = 1000000
+    this.tx = random(-a, a)
+    this.ty = random(-a, a)
+    this.step = type => this['step'+type]()
   }
 
   draw() {
@@ -18,38 +22,45 @@ class Walker {
     point(this.x, this.y)
   }
 
-  step() {
-    let choice = Math.floor(random(4))
-    let r = random()
-    if(r < .25) choice = 0
-    else {
-      choice = Math.floor(random()*3) + 1
+  step0() {
+    let r = random(), c = 3
+    if(r < 1/4) {
+      this.x += c
+      return
     }
-    if(choice == 0) {
-      this.x += this.s
+    r = random()
+    if(r < 1/3) {
+      this.x -= c
     }
-    if(choice == 1) {
-      this.x -= this.s
+    else if(r < 2/3) {
+      this.y += c
     }
-    if(choice == 2) {
-      this.y += this.s
-    }
-    if(choice == 3) {
-      this.y -= this.s
+    else if(r <= 1) {
+      this.y -= c
     }
   }
 
-  step2() {
-    let c = 7
+  step1() {
+    let c = 5
     let stepX = random(-c, c), stepY = random(-c, c)
     this.x += stepX
     this.y += stepY
   }
 
+  step2() {
+    let c = 5
+    let v = p5.Vector.random2D()
+    this.x += c * v.x
+    this.y += c * v.y
+  }
+
   step3() {
-    let r = random(70, 300)
-    let theta = random(0, 2*PI)
-    this.x = centerX + r * cos(theta)
-    this.y = centerY + r * sin(theta)
+    this.tx += .01
+    this.ty += .01
+    let c = 5;
+    let stepX = (noise(this.tx)-.47) * c
+    let stepY = (noise(this.ty)-.47) * c
+    this.x += stepX
+    this.y += stepY
   }
 }
