@@ -4,7 +4,6 @@ var n = 500, nSteps = 1, walkerSize = 5, stepType = 3
 function setup() {
 	width = windowWidth
 	height = windowHeight
-	if(height > width) height = width
 	canvas = createCanvas(width, height)
 	centerX = width/2
 	centerY = height/2
@@ -13,7 +12,10 @@ function setup() {
 	startWalkers()
 	background(0, 0, 0)
 	r = createGraphics(width, height)
-	document.getElementById(canvas.id()).oncontextmenu = () => true
+	if(typeof window.orientation !== 'undefined' || navigator.userAgent.indexOf('IEMobile') !== -1)
+		document.getElementById(canvas.id()).oncontextmenu = () => true
+	else
+		document.getElementById(canvas.id()).oncontextmenu = () => false
 }
 
 function draw() {
@@ -42,27 +44,7 @@ function update() {
 }
 
 function windowResized() {
-	let canvasCopy = get()
-	if(windowHeight > windowWidth) {
-		resizeCanvas(windowWidth, windowWidth)
-		windowHeight = windowWidth
-	}
-	if(windowWidth > width || windowHeight > height) {
-		resizeCanvas(windowWidth, windowHeight)
-		fill(0, 0, 0)
-		stroke(0, 0, 0)
-		if(windowWidth > width) {
-			rect(width, 0, windowWidth - width, windowHeight)
-		}
-		else {
-			rect(0, height, windowWidth, windowHeight - height)
-		}
-		image(canvasCopy, 0, 0)
-	}
-	width = windowWidth
-	height = windowHeight
-	centerX = width/2
-	centerY = height/2
+	resizeCanvas(windowWidth, windowHeight)
 }
 
 function randomColor() {
