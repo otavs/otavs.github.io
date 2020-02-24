@@ -4,7 +4,8 @@ var n = 500, nSteps = 1, walkerSize = 5, stepType = 3
 function setup() {
 	width = windowWidth
 	height = windowHeight
-	canvas = createCanvas(width, height)  
+	if(height > width) height = width
+	canvas = createCanvas(width, height)
 	centerX = width/2
 	centerY = height/2
 	//createGUI()
@@ -12,7 +13,7 @@ function setup() {
 	startWalkers()
 	background(0, 0, 0)
 	r = createGraphics(width, height)
-	document.getElementById(canvas.id()).oncontextmenu = () => false
+	document.getElementById(canvas.id()).oncontextmenu = () => true
 }
 
 function draw() {
@@ -42,6 +43,10 @@ function update() {
 
 function windowResized() {
 	let canvasCopy = get()
+	if(windowHeight > windowWidth) {
+		resizeCanvas(windowWidth, windowWidth)
+		windowHeight = windowWidth
+	}
 	if(windowWidth > width || windowHeight > height) {
 		resizeCanvas(windowWidth, windowHeight)
 		fill(0, 0, 0)
