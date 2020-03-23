@@ -6,10 +6,11 @@ const Application = PIXI.Application,
 PIXI.utils.sayHello(':D')
 
 const app = new Application({
-  width: 256, 
+  width: 256,
   height: 256,
-  // transparent: true,
   antialias: true,
+  clearBeforeRender: false,
+  preserveDrawingBuffer: true
 })
 
 document.body.appendChild(app.view)
@@ -24,14 +25,8 @@ app.renderer.resize(window.innerWidth, window.innerHeight)
 
 loader.add('star.png').load(setup)
 
-let walkers = [], walkerSize = 3, n = 5000, stepType = 3
+let walkers = [], walkerSize = 3, n = 2000, stepType = 3
 let mouseX = 0, mouseY = 0, mouseDown = false
-
-// let fade = new PIXI.Graphics()
-// fade.beginFill(0x000000,0.03)
-// fade.drawRect(0, 0, app.renderer.width, app.renderer.height)
-// fade.endFill()
-// app.stage.addChild(fade)
 
 var stats = new Stats()
 stats.showPanel(0)
@@ -39,6 +34,11 @@ document.body.appendChild(stats.dom)
 
 function setup() {
   startWalkers()
+  let fade = new PIXI.Graphics()
+  fade.beginFill(0x000000, .07)
+  fade.drawRect(0, 0, app.renderer.width, app.renderer.height)
+  fade.endFill()
+  app.stage.addChild(fade)
 }
 
 function startWalkers() {
