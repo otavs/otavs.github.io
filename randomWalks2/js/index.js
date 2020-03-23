@@ -22,7 +22,7 @@ app.renderer.view.style.display = 'block'
 // app.renderer.view.width = 50
 app.renderer.resize(window.innerWidth, window.innerHeight)
 
-loader.add('../img/star.png').load(setup)
+loader.add('star.png').load(setup)
 
 let walkers = [], walkerSize = 3, n = 5000, stepType = 3
 let mouseX = 0, mouseY = 0, mouseDown = false

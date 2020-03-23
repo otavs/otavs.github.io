@@ -15,7 +15,7 @@ class Walker {
     this.shape.drawCircle(0, 0, size)
     this.shape.endFill()
     if(Math.random() < .1){
-      this.shape = new Sprite(resources['../img/star.png'].texture)
+      this.shape = new Sprite(resources['star.png'].texture)
       this.shape.rotation = Math.random() * Math.PI * 2
       this.shape.pivot.set(this.shape.width/2, this.shape.height/2)
     }
