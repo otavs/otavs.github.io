@@ -33,7 +33,9 @@ class Vector2D {
   }
 
   normalize() {
-    this.div(this.mag())
+    let k = this.mag()
+    if(k == 0) this.mult(0)
+    else this.div(k)
     return this
   }
 
@@ -57,4 +59,5 @@ class Vector2D {
   }
 }
 
-Vector2D.random = () => new Vector2D(Math.random()*2-1, Math.random()*2-1).normalize()
+Vector2D.random = () => new Vector2D(Math.random()*2-1, Math.random()*2-1)
+Vector2D.randomUnit = () => Vector2D.random().normalize()
