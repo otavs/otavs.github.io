@@ -24,7 +24,7 @@ class Walker {
   drawShape() {
     this.shape.clear()
     this.shape.beginFill(this.color)
-    this.shape.drawCircle(0, 0, 1)
+    this.shape.drawCircle(0, 0, 1.4)
     this.shape.endFill()
   }
 
