@@ -45,8 +45,13 @@ function initGUI() {
   sliderG = add(window, 'G', 255, 0, 255).name('G').onChange(() => changeWalkerColors()).listen()
   add(window, 'randomB', false).name('Random B').onChange(() => changeWalkerColors()).listen()
   sliderB = add(window, 'B', 255, 0, 255).name('B').onChange(() => changeWalkerColors()).listen()
-
-  folder('?')
+  add(window, 'enableColorFilter', false).name('???').listen().onChange(() => {
+    if(enableColorFilter) initColorMatrix()
+    else app.stage.filters = []
+    changeWalkerColors(enableColorFilter)
+  })
+  
+  folder('Movement')
   add(window, 'stepType', 3, {
     RandomDiscrete: 0,
     Random: 1,
@@ -54,21 +59,21 @@ function initGUI() {
     Noise: 3,
     NoiseNormal: 4
   }).name('Movement')
-  add(window, 'enableColorFilter', false).name('???').listen().onChange(() => {
-    if(enableColorFilter) initColorMatrix()
-    else app.stage.filters = []
-    changeWalkerColors(enableColorFilter)
-  })
-  
+
   folder('Config')
+  add(window, 'fullScreen', false).name('Full Screen').onChange(toggleFullScreen)
   add(window, 'rendering', true).onChange(() => {
     rendering ? app.ticker.start() : app.ticker.stop()
   }).name('Render')
+  addPlainText('Press H to hide the GUI')
 
   folder('Info')
   add(window, 'showStats', false).name('Stats').onChange(() => stats.domElement.style.display = showStats ? 'block' : 'none')
   add(mouse, 'x', mouse.x).listen().name('Mouse X')
   add(mouse, 'y', mouse.y).listen().name('Mouse Y')
+
+  folder('Download')
+  add(window, 'downloadCanvas').name('Download Canvas')
 
   gui.getColor = () => {
     let r = randomR ? random(R) : R
@@ -78,12 +83,12 @@ function initGUI() {
   }
 
   function folder(name) {
-    curFolder = gui.addFolder(name)
+    curFolder = (name !== undefined) ? gui.addFolder(name) : gui
     curFolder.close()
   }
 
   function add(obj, attr, init, ...args) {
-    obj[attr] = init
+    if(init !== undefined) obj[attr] = init
     return curFolder.add(obj, attr, ...args)
   }
 
@@ -92,5 +97,15 @@ function initGUI() {
     return curFolder.addColor(obj, attr)
   }
 
+  function addPlainText(text) {
+    console.log(text)
+    let controller = add(window, 'auxText_', '')
+    controller.domElement.remove()
+    let span = controller.__li.getElementsByTagName('span')[0]
+    span.innerHTML = text
+    span.style.overflow = 'visible'
+    span.style.whiteSpace = 'pre'
+    delete auxText_
+  }
 }
 

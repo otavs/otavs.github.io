@@ -41,7 +41,7 @@ class Walker {
     this.shape.scale.set(walkerSize, walkerSize)
     this.shape.rotation += .1
     this.speed = walkerSpeed
-    if(mouseAttack && dist(this.x, this.y, mouse.x, mouse.y) < mouseRadius + this.size) {
+    if(mouseAttack && dist(this.x, this.y, mouse.x, mouse.y) < mouseRadius + 1.4 * walkerSize) {
       this.remove()
     }
   }
@@ -50,27 +50,27 @@ class Walker {
     let r = Math.floor(Math.random()*100)
     let p = [25, 50, 75, 100]
     if(r < p[0]) {
-      this.x += this.speed 
+      this.x += this.speed * 3
     }
     else if(r < p[1]) {
-      this.x -= this.speed
+      this.x -= this.speed * 3
     }
     else if(r < p[2]) {
-      this.y += this.speed
+      this.y += this.speed * 3
     }
     else if(r <= p[3]) {
-      this.y -= this.speed
+      this.y -= this.speed * 3
     }
   }
 
   step1() {
-    let v = Vector2D.random().mult(this.speed * 2)
+    let v = Vector2D.random().mult(this.speed * 3)
     this.x += v.x
     this.y += v.y
   }
 
   step2() {
-    let v = Vector2D.randomUnit().mult(this.speed * 2)
+    let v = Vector2D.randomUnit().mult(this.speed * 3)
     this.x += v.x
     this.y += v.y
   }

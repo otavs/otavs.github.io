@@ -2,7 +2,7 @@ const loader = PIXI.loader, resources = PIXI.loader.resources
 
 const walkers = new LinkedList()
 
-let app, fadeBg, stats, gui, mouse, colorMatrixFilter, mouseCircle
+let app, fadeBg, stats, gui, mouse, colorMatrixFilter, mouseCircle, downloadLink
 
 let test = false, starChance = .1
 
@@ -35,6 +35,7 @@ function initApp() {
   app.renderer.view.style.display = 'block'
   document.body.appendChild(app.view)
   document.body.appendChild(gui.domElement.parentNode)
+  setupDownloadLink()
   gui.close()
   app.ticker.add(delta => {
     stats.begin()
@@ -176,4 +177,22 @@ function changeWalkerColors(randomize) {
   walkers.forEach(walker => {
     walker.setColor(randomize ? randomColor() : gui.getColor())
   })
+}
+
+function setupDownloadLink() {
+  downloadLink = document.createElement('a')
+  downloadLink.id = 'downloadLink'
+  downloadLink.download = 'canvas.png'
+  downloadLink.href = app.view.toDataURL('image/png')
+  document.body.appendChild(downloadLink)
+}
+
+function downloadCanvas() {
+  downloadLink.href = app.view.toDataURL("image/png")
+  downloadLink.click()
+}
+
+function toggleFullScreen(fullScreen) {
+  if(fullScreen) document.body.requestFullscreen()
+  else document.exitFullscreen()
 }
