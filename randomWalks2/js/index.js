@@ -183,7 +183,6 @@ function setupDownloadLink() {
   downloadLink = document.createElement('a')
   downloadLink.id = 'downloadLink'
   downloadLink.download = 'canvas.png'
-  downloadLink.href = app.view.toDataURL('image/png')
   document.body.appendChild(downloadLink)
 }
 
@@ -193,6 +192,22 @@ function downloadCanvas() {
 }
 
 function toggleFullScreen(fullScreen) {
-  if(fullScreen) document.body.requestFullscreen()
-  else document.exitFullscreen()
+  if(fullScreen) {
+    document.body.requestFullscreen = document.body.requestFullscreen 
+    || document.body.mozRequestFullScreen 
+    || document.body.webkitRequestFullscreen 
+    || document.body.webkitRequestFullScreen 
+    || document.body.msRequestFullscreen 
+    || function(){console.log('No fullscreen function found')}
+    document.body.requestFullscreen()
+  }
+  else {
+    document.exitFullscreen = document.exitFullscreen 
+    || document.mozCancelFullScreen 
+    || document.webkitCancelFullscreen 
+    || document.webkitCancelFullScreen 
+    || document.msExitFullscreen 
+    || function(){console.log('No fullscreen function found')}
+    document.exitFullscreen()
+  }
 }
