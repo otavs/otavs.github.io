@@ -5,14 +5,14 @@ class Vector2D {
   }
 
   add(v) {
-    this.x += x
-    this.y += y
+    this.x += v.x
+    this.y += v.y
     return this
   }
 
   sub(v) {
-    this.x -= x
-    this.y -= y
+    this.x -= v.x
+    this.y -= v.y
     return this
   }
 
