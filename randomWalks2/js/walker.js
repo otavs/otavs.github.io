@@ -33,7 +33,8 @@ class Walker {
     this.drawShape()
   }
 
-  step(type) {
+  step(type, delta) {
+    // this.drawShape()
     this.prevX = this.x
     this.prevY = this.y
     this['step'+type]()
@@ -65,19 +66,21 @@ class Walker {
 
   step1() {
     let v = Vector2D.random().mult(this.speed * 3)
+    v.mult(delta)
     this.x += v.x
     this.y += v.y
   }
 
   step2() {
     let v = Vector2D.randomUnit().mult(this.speed * 3)
+    v.mult(delta)
     this.x += v.x
     this.y += v.y
   }
 
   step3() {
-    this.tx += .006
-    this.ty += .006
+    this.tx += .006 * delta
+    this.ty += .006 * delta
     let v = new Vector2D(noise.simplex2(this.tx, 0), noise.simplex2(this.ty, 0)).mult(this.speed*1.5)
     if(mouse.pressed) {
       v.normalize().mult(mouseForce)
@@ -88,23 +91,25 @@ class Walker {
       if(mouse.rightPressed)
          v.mult(-1)
     }
+    v.mult(delta)
     this.x += v.x
     this.y += v.y
   }
 
   step4() {
-    this.tx += .006
-    this.ty += .006
-    let v = new Vector2D(noise.simplex2(this.tx, 0), noise.simplex2(this.ty, 0)).normalize().mult(this.speed*1.5) 
+    this.tx += .006 * delta
+    this.ty += .006 * delta
+    let v = new Vector2D(noise.simplex2(this.tx, 0), noise.simplex2(this.ty, 0)).normalize().mult(this.speed*1.5)
     if(mouse.pressed) {
       v.normalize().mult(mouseForce)
       let theta = v.angleBetween(new Vector2D(mouse.x-this.x, mouse.y-this.y))
       theta += map(noise.simplex2(this.ta, 0), -1, 1, -spread, spread)
-      this.ta += .01
+      this.ta += .01 * delta
       v.rotate(theta)
       if(mouse.rightPressed)
          v.mult(-1)
     }
+    v.mult(delta)
     this.x += v.x
     this.y += v.y
   }
