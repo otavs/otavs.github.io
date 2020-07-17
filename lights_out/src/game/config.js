@@ -6,7 +6,7 @@ const config = {
   state: states.PLAY,
   showSolution: false,
   gap: 3,
-  squareSize: 40,
+  squareSize: 100,
   initStates: [
     [1,1,0,1,0,0,1],
     [1,1,1,0,1,0,1],

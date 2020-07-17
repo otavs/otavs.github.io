@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Aside() {
+export default function Aside(props) {
   return <>
-    <h1>Lights Out!</h1>
+    <div style={props.style}>
+      <h1>Lights Out!</h1>
+    </div>
   </>
 }

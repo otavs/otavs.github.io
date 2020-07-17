@@ -10,7 +10,7 @@
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.1",
-    "react-split-pane": "^0.1.91"
+    "react-split-pane": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

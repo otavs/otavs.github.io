@@ -13,7 +13,6 @@ const game = p5 => {
 
   p5.draw = () => {
     let {n, m} = config
-    p5.background('#bdf3ff')
     for(let i = 0; i < n; i++) {
       for(let j = 0; j < m; j++) {
         squares[i][j].update(p5)
@@ -22,13 +21,21 @@ const game = p5 => {
     }
   }
 
-  p5.mousePressed = () => {
+  p5.mousePressed = e => {
+    console.log(e)
+    if(e.type != 'mousedown') 
+      return true
     let {n, m} = config
     for(let i = 0; i < n; i++) {
       for(let j = 0; j < m; j++) {
         squares[i][j].checkMouseClick(p5.mouseX, p5.mouseY)
       }
     }
+  }
+
+  // not working when resized with split pane
+  p5.windowResized = () => {
+    p5.resizeCanvas(parent.offsetWidth, parent.offsetHeight)
   }
 
   function squareClick(i, j) {
