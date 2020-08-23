@@ -2,7 +2,7 @@ const loader = PIXI.loader, resources = PIXI.loader.resources
 
 const walkers = new LinkedList()
 
-let app, fadeBg, stats, gui, mouse, colorMatrixFilter, mouseCircle, downloadLink, delta = 1
+let app, fadeBg, stats, gui, mouse, colorMatrixFilter, mouseCircle, downloadLink
 
 let test = false, starChance = .1
 
@@ -37,8 +37,7 @@ function initApp() {
   document.body.appendChild(gui.domElement.parentNode)
   setupDownloadLink()
   gui.close()
-  app.ticker.add(d => {
-    delta = d
+  app.ticker.add(delta => {
     stats.begin()
     update(delta)
     stats.end()
@@ -47,8 +46,8 @@ function initApp() {
 
 function update() {
   if(enableColorFilter) updateFilter()
-  updateMouse(delta)
-  walkers.forEach(walker => walker.step(stepType, delta))
+  updateMouse()
+  walkers.forEach(walker => walker.step(stepType))
 }
 
 function updateMouse() {
@@ -119,7 +118,7 @@ function initFade() {
 
 function redrawFade() {
   fadeBg.clear()
-  .beginFill(bgColor, 1)
+  .beginFill(bgColor, .15)
   .drawRect(0, 0, app.renderer.width, app.renderer.height)
   .endFill()
 }
